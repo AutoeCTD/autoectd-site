@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index,follow" />
+  <title>Privacy Policy — AutoeCTD Inc.</title>
+  <meta name="description" content="Privacy Policy for AutoeCTD Inc., the regulatory submission platform built by Regulatory Affairs professionals." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --paper:#F2EEE5;
+      --paper-2:#EBE6DA;
+      --cream:#FAF7F0;
+      --ink:#0F1729;
+      --ink-2:#374151;
+      --ink-3:#6B7280;
+      --rule:#D6CFB9;
+      --navy:#1B3A6B;
+      --navy-deep:#142E55;
+      --ctd:#1B3A6B;
+      --ctd-light:#93C5FD;
+
+      --display:'Fraunces', 'Iowan Old Style', 'Apple Garamond', 'Baskerville', Georgia, serif;
+      --body:'DM Sans', -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+      --mono:'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{
+      margin:0;background:var(--paper);color:var(--ink);
+      font-family:var(--body);font-size:16px;line-height:1.55;
+    }
+    .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+    @media (max-width:760px){.wrap{padding:0 20px}}
+
+    /* ============================================================
+       HEADER (matches main site)
+       ============================================================ */
+    header.site{
+      position:sticky;top:0;z-index:50;
+      background:rgba(242,238,229,.94);backdrop-filter:saturate(180%) blur(14px);
+      -webkit-backdrop-filter:saturate(180%) blur(14px);
+      border-bottom:1px solid var(--rule);
+    }
+    header.site .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 0;
+    }
+    .brand{display:inline-flex;align-items:center;text-decoration:none;color:inherit}
+    .brand-wordmark{
+      font-family:'DejaVu Sans', Arial, sans-serif;font-weight:700;
+      font-size:18px;letter-spacing:-0.015em;color:#fff;
+      background:var(--navy);padding:8px 14px;border-radius:8px;line-height:1;
+      display:inline-block;
+    }
+    .brand-wordmark .e{color:var(--ctd-light)}
+    .brand-wordmark .tm{
+      font-size:8px;color:#9CA3AF;margin-left:2px;
+      position:relative;top:-0.65em;font-weight:400;
+    }
+    nav.links{display:flex;align-items:center;gap:28px}
+    nav.links a{
+      color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;
+      transition:color .15s;
+    }
+    nav.links a:hover{color:var(--navy)}
+    .btn{
+      display:inline-block;text-decoration:none;font-weight:500;font-size:14px;
+      padding:10px 18px;border-radius:999px;line-height:1.2;transition:all .2s;
+      border:1px solid transparent;
+    }
+    .btn-primary{background:var(--navy);color:#fff}
+    .btn-primary:hover{background:var(--navy-deep);color:#fff}
+    /* Hyper-specific override — guarantees nav button text stays white */
+    header.site nav.links a.btn-primary,
+    header.site nav.links a.btn-primary:hover{
+      color:#fff !important;
+    }
+    @media (max-width:760px){
+      nav.links a:not(.btn){display:none}
+    }
+
+    /* ============================================================
+       LEGAL PAGE
+       ============================================================ */
+    .legal-masthead{
+      padding:80px 0 24px;
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+      letter-spacing:.18em;text-transform:uppercase;
+      display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid var(--rule);
+    }
+    .legal-masthead .dot{
+      display:inline-block;width:8px;height:8px;border-radius:50%;
+      background:#10B981;margin-right:10px;vertical-align:middle;
+    }
+    @media (max-width:600px){
+      .legal-masthead{flex-direction:column;align-items:flex-start;gap:8px}
+    }
+
+    .legal-page{padding:64px 0 96px}
+    .legal-inner{max-width:760px;margin:0 auto}
+
+    .legal-page h1{
+      font-family:var(--display);font-weight:300;
+      font-size:clamp(40px, 5.5vw, 72px);
+      line-height:1.05;letter-spacing:-0.02em;
+      margin:0 0 18px;color:var(--ink);
+      font-variation-settings:"opsz" 144, "SOFT" 60;
+    }
+    .legal-meta{
+      font-family:var(--mono);font-size:12px;color:var(--ink-3);
+      letter-spacing:.05em;margin:0 0 56px;
+      padding-bottom:24px;border-bottom:1px solid var(--rule);
+    }
+
+    .legal-page section{margin-bottom:44px}
+    .legal-page .section-num{
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+      letter-spacing:.14em;text-transform:uppercase;
+      margin:0 0 8px;
+    }
+    .legal-page h2{
+      font-family:var(--display);font-weight:400;
+      font-size:clamp(22px, 2.6vw, 28px);
+      line-height:1.2;letter-spacing:-0.012em;
+      margin:0 0 16px;color:var(--ink);
+      font-variation-settings:"opsz" 72, "SOFT" 40;
+    }
+    .legal-page p{
+      margin:0 0 14px;font-size:15.5px;line-height:1.65;color:var(--ink-2);
+    }
+    .legal-page p strong{color:var(--ink);font-weight:600}
+    .legal-page ul{
+      margin:0 0 14px;padding:0 0 0 22px;
+      font-size:15.5px;line-height:1.65;color:var(--ink-2);
+    }
+    .legal-page ul li{margin:0 0 6px}
+    .legal-page a{color:var(--navy);text-decoration:underline}
+    .legal-page a:hover{color:var(--navy-deep)}
+    .legal-page address{
+      font-style:normal;
+      padding:18px 22px;background:var(--paper-2);border-radius:8px;
+      margin:0 0 14px;font-size:15px;line-height:1.7;color:var(--ink-2);
+    }
+
+    /* ============================================================
+       FOOTER (matches main site)
+       ============================================================ */
+    footer{padding:64px 0 36px;border-top:1px solid var(--rule);background:var(--paper)}
+    .foot-grid{
+      display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:36px;margin-bottom:48px;
+    }
+    @media (max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr 1fr;gap:32px}}
+    @media (max-width:680px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+    .foot-brand{max-width:340px}
+    .foot-brand p{font-size:14px;color:var(--ink-2);line-height:1.55;margin:14px 0 0}
+    .foot-col h5{
+      font-family:var(--mono);font-size:11px;text-transform:uppercase;
+      letter-spacing:.14em;color:var(--ink-3);margin:0 0 14px;font-weight:500;
+    }
+    .foot-col ul{list-style:none;margin:0;padding:0}
+    .foot-col li{margin:0 0 10px}
+    .foot-col a{
+      color:var(--ink-2);text-decoration:none;font-size:14px;
+      transition:color .15s ease;
+    }
+    .foot-col a:hover{color:var(--navy)}
+    .foot-bottom{
+      display:flex;justify-content:space-between;align-items:center;
+      padding-top:24px;border-top:1px solid var(--rule);
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+    }
+    @media (max-width:600px){.foot-bottom{flex-direction:column;gap:10px;align-items:flex-start}}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html">
+          <span class="brand-wordmark">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+        </a>
+        <nav class="links">
+          <a href="index.html#suite">Suite</a>
+          <a href="index.html#engine">Engine</a>
+          <a href="index.html#process">Process</a>
+          <a href="index.html#compliance">Compliance</a>
+          <a href="index.html#company">Company</a>
+          <a class="btn btn-primary" href="index.html#contact">Request a demo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MASTHEAD -->
+  <div class="wrap">
+    <div class="legal-masthead">
+      <span><span class="dot"></span>AutoeCTD Inc. · Legal · Privacy Policy</span>
+      <span>Vol. 1 · Issue 01 · 2026</span>
+    </div>
+  </div>
+
+  <!-- PAGE -->
+  <main class="legal-page">
+    <div class="wrap">
+      <div class="legal-inner">
+
+        <h1>Privacy Policy</h1>
+        <div class="legal-meta">Last updated: May 7, 2026</div>
+
+        <section>
+          <p>This Privacy Policy describes how AutoeCTD Inc. ("AutoeCTD," "we," "us," or "our") collects, uses, and discloses information in connection with this website at autoectd.com (the "Site").</p>
+          <p>This policy describes practices for the marketing website only. It does not cover the AutoeCTD platform, products, or services that are provided to enterprise customers under separate written agreement, which are governed by their own data processing terms.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 01 — Information We Do Not Collect</p>
+          <h2>This Site is intentionally low-data.</h2>
+          <p>We have designed this Site to minimize data collection. The Site does <strong>not</strong>:</p>
+          <ul>
+            <li>Use cookies of any kind</li>
+            <li>Run web analytics services such as Google Analytics, Mixpanel, or similar</li>
+            <li>Embed advertising or tracking pixels</li>
+            <li>Use third-party advertising or remarketing networks</li>
+            <li>Operate contact forms, signup flows, or account systems</li>
+            <li>Maintain user accounts, sessions, or persistent identifiers</li>
+          </ul>
+          <p>If you visit this Site and do not contact us, we do not collect any information that personally identifies you. Our web hosting provider may maintain standard server logs (including IP addresses, user-agent strings, and request timestamps) for operational and security purposes; these logs are retained for limited periods and are not used to identify individuals.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 02 — Information You Provide Voluntarily</p>
+          <h2>Email is the only channel.</h2>
+          <p>The only way you actively provide information through this Site is by clicking a <code>mailto:</code> email link to send us a message. When you do this:</p>
+          <ul>
+            <li>Your email message is delivered to the recipient address shown on the Site (currently <a href="mailto:sales@autoectd.com">sales@autoectd.com</a>)</li>
+            <li>We receive your email address, the display name configured in your email client, and the contents of your message</li>
+            <li>We use this information solely to respond to your inquiry and to maintain ordinary records of business correspondence</li>
+            <li>We do not add you to marketing lists, share your email with third parties, or use it for any purpose unrelated to your inquiry</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-num">§ 03 — How We Use Information</p>
+          <h2>Inquiry response and ordinary business records.</h2>
+          <p>Information you provide via email is used:</p>
+          <ul>
+            <li>To respond to your inquiry</li>
+            <li>To maintain ordinary records of business correspondence</li>
+            <li>For internal business purposes related to our pre-revenue commercial pilot stage</li>
+            <li>To comply with applicable legal obligations</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-num">§ 04 — Disclosure to Third Parties</p>
+          <h2>We do not sell or share your data.</h2>
+          <p>We do not sell, rent, or share your personal information with third parties for their own commercial purposes.</p>
+          <p>We may disclose information in the following limited circumstances:</p>
+          <ul>
+            <li>To service providers who process information on our behalf (currently limited to our email service provider)</li>
+            <li>To comply with applicable law, legal process, court order, or lawful government request</li>
+            <li>To protect the rights, property, or safety of AutoeCTD, our customers, or the public</li>
+            <li>In connection with a corporate transaction (such as a merger, acquisition, or sale of business assets), in which case we will notify affected individuals of any material change in privacy practices</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-num">§ 05 — Your Rights</p>
+          <h2>Access, correction, and withdrawal.</h2>
+          <p>Under Canada's <strong>Personal Information Protection and Electronic Documents Act (PIPEDA)</strong>, you have the right to:</p>
+          <ul>
+            <li>Request access to personal information we hold about you</li>
+            <li>Request correction of inaccurate or incomplete information</li>
+            <li>Withdraw your consent for the use of your personal information, subject to legal and contractual restrictions</li>
+            <li>File a complaint with the Office of the Privacy Commissioner of Canada at <a href="https://www.priv.gc.ca" target="_blank" rel="noopener">priv.gc.ca</a></li>
+          </ul>
+          <p>If you are located in the European Union, the United Kingdom, or other jurisdictions with applicable data protection laws (such as the General Data Protection Regulation), you may have additional rights, including the right to data portability and the right to erasure. We will honor reasonable requests consistent with applicable law.</p>
+          <p>To exercise any of these rights, contact us at the address provided in Section 11.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 06 — Children's Privacy</p>
+          <h2>This Site is for business audiences.</h2>
+          <p>This Site is intended for adult business audiences, particularly Regulatory Affairs and Quality professionals working in the pharmaceutical industry. The Site is not directed at minors under the age of 16. We do not knowingly collect personal information from children. If we become aware that we have collected information from a minor without parental consent, we will delete it.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 07 — Data Retention</p>
+          <h2>We retain only what is needed.</h2>
+          <p>We retain email correspondence and any associated information for as long as necessary to fulfill the purposes described in this Policy, to comply with legal obligations, and to maintain ordinary business records. We periodically review our retention practices and delete information that is no longer required.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 08 — Security</p>
+          <h2>Reasonable safeguards.</h2>
+          <p>We use commercially reasonable physical, technical, and administrative safeguards to protect information against unauthorized access, disclosure, alteration, and destruction. However, no method of internet transmission or electronic storage is completely secure, and we cannot guarantee absolute security.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 09 — International Transfers</p>
+          <h2>We operate from Canada.</h2>
+          <p>AutoeCTD Inc. is federally incorporated in Canada and operates from Ontario. Information you send us by email may be processed and stored in Canada. If you are located outside Canada, please be aware that Canadian privacy laws may differ from those of your jurisdiction. By sending us information, you consent to its transfer to and processing in Canada.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 10 — Changes to This Policy</p>
+          <h2>We will tell you when this changes.</h2>
+          <p>We may update this Privacy Policy from time to time to reflect changes in our practices, the Site, or applicable law. The "Last updated" date at the top of this page will reflect the most recent revision. Material changes will be communicated through prominent notice on this Site for a reasonable period.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 11 — Contact</p>
+          <h2>How to reach us.</h2>
+          <p>Privacy inquiries should be directed to:</p>
+          <address>
+            AutoeCTD Inc.<br>
+            Greater Toronto Area, Ontario, Canada<br>
+            <a href="mailto:sales@autoectd.com">sales@autoectd.com</a>
+          </address>
+          <p>You also have the right to contact the <strong>Office of the Privacy Commissioner of Canada</strong> at <a href="https://www.priv.gc.ca" target="_blank" rel="noopener">priv.gc.ca</a>. If you are located in the European Union, you may also contact your national data protection authority.</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-wordmark">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+          </a>
+          <p>The AI-native regulatory submission platform. eCTD packaging, XML labeling, and deficiency response — engineered for the way Regulatory Affairs teams actually work.</p>
+        </div>
+        <div class="foot-col">
+          <h5>Suite</h5>
+          <ul>
+            <li><a href="index.html#suite">AutoeCTD</a></li>
+            <li><a href="index.html#suite">AutoeXML</a></li>
+            <li><a href="index.html#suite">AutoeDEF</a></li>
+            <li><a href="index.html#suite">AutoeDOC</a></li>
+            <li><a href="index.html#suite">AutoeLABEL</a></li>
+            <li><a href="index.html#suite">AutoeQA</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="index.html#engine">Classification engine</a></li>
+            <li><a href="index.html#process">Submission pipeline</a></li>
+            <li><a href="index.html#compliance">Compliance</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="index.html#company">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="mailto:sales@autoectd.com">Sales</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 AutoeCTD Inc. · All rights reserved.</span>
+        <span>Designed for 21 CFR Part 11 · Preparing for SOC 2</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

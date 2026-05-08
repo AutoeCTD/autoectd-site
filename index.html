@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AutoeCTD — Regulatory Submissions built by Professionals. Accelerated by AI.</title>
+  <meta name="description" content="The regulatory submission platform built by RA professionals, accelerated by AI. Document authoring, labeling, XML, eCTD packaging, deficiency response, and quality lifecycle — in one suite." />
+  <meta name="theme-color" content="#1B3A6B">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231B3A6B'/%3E%3Ctext x='50' y='66' font-family='DejaVu Sans, Arial, sans-serif' font-weight='700' font-size='44' text-anchor='middle' fill='%23FFFFFF'%3EA%3Ctspan fill='%2393C5FD'%3Ee%3C/tspan%3EC%3C/text%3E%3C/svg%3E">
+
+  <style>
+    :root{
+      --paper:#FAF8F3;          /* warm off-white, regulatory document feel */
+      --paper-2:#F2EEE5;        /* slightly deeper for alternating bands     */
+      --surface:#FFFFFF;
+      --rule:#D8D2C2;           /* warm hairline */
+      --ink:#1A1F2C;            /* near black, body text */
+      --ink-2:#4B5563;
+      --ink-3:#7B7160;          /* warm gray */
+      --navy:#1B3A6B;
+      --navy-deep:#13284A;
+      --navy-card:#253F6E;      /* exact card hex from the wordmark */
+      --ctd:#3B82F6;            /* AutoeCTD accent (deeper than #93C5FD on light bg) */
+      --ctd-light:#93C5FD;      /* original wordmark accent — used on dark cards */
+      --xml:#06B6D4;            /* AutoeXML accent — cyan, per brand spec (Tailwind cyan-500) */
+      --xml-soft:#FBBF24;
+      --def:#10B981;            /* AutoeDEF accent — confirmed green */
+      --def-soft:#34D399;
+
+      --display: 'Fraunces', 'Iowan Old Style', 'Times New Roman', serif;
+      --sans: 'Geist', 'Söhne', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:var(--sans);
+      color:var(--ink);
+      background:var(--paper);
+      font-size:17px;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      font-feature-settings:"ss01","ss02";
+    }
+    img,svg{display:block;max-width:100%}
+    a{color:inherit}
+
+    /* ---- shared layout ---- */
+    .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+    @media (max-width:640px){ .wrap{padding:0 22px} }
+
+    .eyebrow{
+      font-family:var(--mono);
+      font-size:11.5px;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--ink-3);
+      font-weight:500;
+    }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    header.site{
+      position:sticky;top:0;z-index:50;
+      background:color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter:saturate(140%) blur(10px);
+      -webkit-backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid var(--rule);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 0;
+    }
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+
+    /* Unified brand wordmark — same style at every scale (nav, footer, product cards) */
+    .brand-wordmark{
+      display:inline-flex;align-items:baseline;
+      background:var(--navy-card);color:#fff;border-radius:8px;
+      padding:9px 13px;font-family:'DejaVu Sans', Arial, sans-serif;
+      font-weight:700;font-size:18px;letter-spacing:-0.015em;
+      line-height:1;
+    }
+    .brand-wordmark .e{color:var(--ctd-light)}
+    .brand-wordmark .tm{
+      font-size:8px;font-weight:400;color:#9CA3AF;
+      margin-left:2px;letter-spacing:0;
+      position:relative;top:-0.65em;          /* lift to top-right corner */
+    }
+    nav.links{display:flex;align-items:center;gap:30px}
+    nav.links a{
+      text-decoration:none;color:var(--ink-2);font-size:14.5px;font-weight:500;
+      transition:color .15s ease;
+    }
+    nav.links a:hover{color:var(--navy)}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--sans);font-weight:500;font-size:14.5px;
+      padding:10px 18px;border-radius:999px;border:1px solid transparent;
+      text-decoration:none;cursor:pointer;
+      transition:transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn-primary{background:var(--navy);color:#fff}
+    .btn-primary:hover{background:var(--navy-deep);color:#fff}
+    /* Hyper-specific overrides for nav and hero buttons — high specificity prevents
+       any future cascade conflict from making nav/hero text unreadable.
+       Scoped tightly so the .cta-band button can still invert (navy text on light bg). */
+    header.site nav.links a.btn-primary,
+    header.site nav.links a.btn-primary:hover,
+    section.hero .hero-cta a.btn-primary,
+    section.hero .hero-cta a.btn-primary:hover{
+      color:#fff !important;
+    }
+    .btn-ghost{border-color:var(--rule);color:var(--ink);background:transparent}
+    .btn-ghost:hover{border-color:var(--ink)}
+
+    @media (max-width:760px){
+      nav.links a:not(.btn){display:none}
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero{position:relative;padding:96px 0 48px;overflow:hidden}
+    .hero .grid-bg{
+      position:absolute;inset:0;pointer-events:none;
+      background-image:
+        linear-gradient(to right, rgba(27,58,107,.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(27,58,107,.06) 1px, transparent 1px);
+      background-size:64px 64px;
+      mask-image:radial-gradient(ellipse 70% 60% at 50% 35%, black 30%, transparent 75%);
+      -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 35%, black 30%, transparent 75%);
+    }
+    .hero-inner{position:relative;display:grid;grid-template-columns:1fr;gap:48px}
+
+    .filing-meta{
+      display:flex;justify-content:space-between;align-items:baseline;
+      border-top:1px solid var(--rule);
+      border-bottom:1px solid var(--rule);
+      padding:10px 0;margin-bottom:48px;
+      font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;
+      text-transform:uppercase;color:var(--ink-3);
+    }
+    .filing-meta .dot{
+      display:inline-block;width:7px;height:7px;border-radius:50%;
+      background:var(--def);margin-right:8px;vertical-align:middle;
+      box-shadow:0 0 0 4px rgba(16,185,129,.18);
+    }
+
+    .hero-eyebrow{
+      font-family:var(--display);font-style:italic;font-weight:300;
+      font-size:clamp(20px, 2.2vw, 28px);line-height:1.2;
+      letter-spacing:-0.005em;color:var(--navy);
+      margin:0 0 22px;opacity:.78;
+      font-variation-settings:"opsz" 60, "SOFT" 80;
+    }
+    h1.headline{
+      font-family:var(--display);
+      font-weight:300;
+      font-size:clamp(40px, 6.4vw, 88px);
+      line-height:1.0;
+      letter-spacing:-0.025em;
+      margin:0 0 28px;
+      color:var(--ink);
+      font-variation-settings:"opsz" 144, "SOFT" 60;
+    }
+    h1.headline em{
+      font-style:italic;font-weight:300;
+      color:var(--navy);
+      font-variation-settings:"opsz" 144, "SOFT" 80, "WONK" 0;
+    }
+    h1.headline .ampersand{
+      font-style:italic;font-weight:300;color:var(--ctd);
+      padding:0 .04em;
+      font-variation-settings:"opsz" 144, "SOFT" 80, "WONK" 0;
+    }
+    .hero-lede{
+      max-width:640px;
+      font-size:20px;line-height:1.5;color:var(--ink-2);font-weight:400;
+      margin:0 0 36px;
+    }
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+    .hero-cta .btn-primary{padding:14px 24px;font-size:15px}
+    .hero-cta .btn-ghost{padding:14px 24px;font-size:15px}
+    .hero-cta .with-arrow::after{content:"→";margin-left:4px;transition:transform .2s ease}
+    .hero-cta .with-arrow:hover::after{transform:translateX(3px)}
+
+    /* hero stats strip */
+    .stats{
+      margin-top:96px;
+      display:grid;grid-template-columns:repeat(4, 1fr);
+      gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    }
+    .stats > div{
+      padding:28px 24px 28px 0;
+      border-right:1px solid var(--rule);
+    }
+    .stats > div:last-child{border-right:none;padding-right:0}
+    .stat-num{
+      font-family:var(--display);font-weight:300;
+      font-size:48px;line-height:1;letter-spacing:-0.03em;
+      color:var(--navy);
+      font-variation-settings:"opsz" 144;
+    }
+    .stat-num .unit{font-size:24px;color:var(--ink-3);margin-left:2px}
+    .stat-label{
+      margin-top:10px;font-size:13.5px;color:var(--ink-2);max-width:200px;
+    }
+    @media (max-width:840px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .stats > div:nth-child(2){border-right:none}
+      .stats > div:nth-child(1),
+      .stats > div:nth-child(2){border-bottom:1px solid var(--rule)}
+      .stats > div{padding:24px 18px 24px 0}
+      .stats > div:nth-child(even){padding-left:18px;padding-right:0}
+    }
+
+    /* ============================================================
+       SECTION shell
+       ============================================================ */
+    section.band{padding:120px 0;border-top:1px solid var(--rule)}
+    section.band.alt{background:var(--paper-2)}
+
+    /* ============================================================
+       APP MOCKUP — editorial product visual under hero
+       ============================================================ */
+    .app-mockup-wrap{
+      padding:0 0 100px;background:var(--paper);
+      position:relative;
+    }
+    .app-mockup-wrap::before{
+      content:"";position:absolute;inset:0;
+      background:radial-gradient(ellipse 70% 50% at 50% 100%, rgba(27,58,107,.08), transparent 70%);
+      pointer-events:none;
+    }
+    .browser-frame{
+      max-width:1100px;margin:0 auto;position:relative;
+      background:#fff;border-radius:14px;
+      box-shadow:0 1px 0 rgba(255,255,255,.5) inset,
+                 0 30px 60px -25px rgba(15,35,71,.28),
+                 0 18px 36px -18px rgba(15,35,71,.18);
+      border:1px solid var(--rule);overflow:hidden;
+    }
+    .browser-bar{
+      display:flex;align-items:center;gap:14px;
+      padding:14px 18px;
+      background:linear-gradient(to bottom, #fafaf6, #f4f3ed);
+      border-bottom:1px solid var(--rule);
+    }
+    .browser-dots{display:flex;gap:6px}
+    .browser-dots span{width:11px;height:11px;border-radius:50%}
+    .browser-dots span:nth-child(1){background:#ff5f57}
+    .browser-dots span:nth-child(2){background:#febc2e}
+    .browser-dots span:nth-child(3){background:#28c840}
+    .browser-url{
+      flex:1;text-align:center;font-family:var(--mono);
+      font-size:12px;color:var(--ink-3);
+      background:#fff;padding:5px 12px;border-radius:6px;
+      border:1px solid var(--rule);
+    }
+    .app-grid{
+      display:grid;grid-template-columns:240px 1fr;
+      min-height:480px;
+    }
+    @media (max-width:760px){.app-grid{grid-template-columns:1fr}.app-sidebar{display:none}}
+    .app-sidebar{
+      background:var(--navy);color:#fff;padding:26px 20px;
+      display:flex;flex-direction:column;gap:4px;
+    }
+    .app-sidebar .brand-block{
+      margin-bottom:24px;padding-bottom:18px;
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+    .app-sidebar .brand-block .wm{
+      font-family:'DejaVu Sans', Arial, sans-serif;font-weight:700;
+      font-size:20px;letter-spacing:-0.015em;line-height:1;
+    }
+    .app-sidebar .brand-block .wm .e{color:var(--ctd-light)}
+    .app-sidebar .brand-block .wm .tm{
+      font-size:8px;color:#9CA3AF;margin-left:2px;
+      position:relative;top:-0.7em;font-weight:400;
+    }
+    .app-sidebar .brand-block .subtitle{
+      font-family:var(--mono);font-size:10px;
+      letter-spacing:.15em;text-transform:uppercase;
+      color:var(--ctd-light);margin-top:8px;
+    }
+    .nav-item{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius:6px;
+      font-size:13px;color:rgba(255,255,255,.7);
+      transition:all .2s;cursor:pointer;
+    }
+    .nav-item.active{background:rgba(147,197,253,.14);color:#fff}
+    .nav-item .dot{width:6px;height:6px;border-radius:50%;background:var(--ctd-light)}
+    .app-main{background:var(--paper);padding:30px 34px}
+    .app-h{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:22px;
+    }
+    .app-h h3{
+      font-family:var(--display);font-size:24px;font-weight:400;
+      color:var(--ink);letter-spacing:-0.012em;
+      font-variation-settings:"opsz" 96, "SOFT" 40;
+    }
+    .new-pill{
+      font-family:var(--mono);font-size:11px;
+      padding:5px 11px;border-radius:999px;
+      background:rgba(27,58,107,.08);color:var(--navy);
+      letter-spacing:.04em;
+    }
+    .submission-row{
+      background:#fff;border:1px solid var(--rule);
+      border-radius:9px;padding:15px 17px;margin-bottom:9px;
+      display:grid;grid-template-columns:1fr auto auto auto;
+      gap:18px;align-items:center;font-size:13.5px;
+    }
+    .submission-row .name{font-weight:600;color:var(--ink);letter-spacing:-0.005em}
+    .submission-row .meta-line{color:var(--ink-3);font-size:11.5px;font-family:var(--mono);margin-top:3px}
+    .progress{
+      width:90px;height:4px;background:var(--paper-2);
+      border-radius:999px;overflow:hidden;border:1px solid var(--rule);
+    }
+    .progress > span{display:block;height:100%;background:var(--ctd-light);border-radius:999px}
+    .pct{color:var(--ink-3);font-family:var(--mono);font-size:11.5px}
+    .badge-pill{
+      font-family:var(--mono);font-size:10px;font-weight:600;
+      letter-spacing:.04em;text-transform:uppercase;
+      padding:4px 10px;border-radius:999px;
+    }
+    .badge-pill.ready{background:rgba(16,185,129,.13);color:#047857}
+    .badge-pill.review{background:rgba(245,158,11,.14);color:#b45309}
+    .badge-pill.classify{background:rgba(147,197,253,.22);color:var(--navy)}
+    @media (max-width:760px){
+      .submission-row{grid-template-columns:1fr auto}
+      .submission-row .progress,.submission-row .pct{display:none}
+    }
+    .section-head{
+      display:grid;grid-template-columns:200px 1fr;gap:48px;
+      margin-bottom:64px;align-items:start;
+    }
+    .section-head .eyebrow-wrap{padding-top:8px}
+    .section-head h2{
+      font-family:var(--display);font-weight:300;
+      font-size:clamp(34px, 4.2vw, 56px);
+      line-height:1.05;letter-spacing:-0.022em;
+      margin:0;color:var(--ink);
+      font-variation-settings:"opsz" 96, "SOFT" 40;
+      max-width:840px;
+    }
+    .section-head h2 em{font-style:italic;color:var(--navy);font-variation-settings:"opsz" 96, "SOFT" 100, "WONK" 1}
+    @media (max-width:760px){
+      .section-head{grid-template-columns:1fr;gap:18px;margin-bottom:40px}
+    }
+
+    /* ============================================================
+       PROBLEM / SOLUTION (prose)
+       ============================================================ */
+    .prose-grid{
+      display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start;
+    }
+    .prose{max-width:760px}
+    .prose p{font-size:19px;line-height:1.6;color:var(--ink);margin:0 0 22px}
+    .prose p.lead{font-family:var(--display);font-weight:300;font-size:28px;line-height:1.32;letter-spacing:-0.012em;color:var(--navy);margin-bottom:32px;font-variation-settings:"opsz" 96, "SOFT" 60}
+    .prose p em{font-style:italic;color:var(--navy)}
+    .pull-quote{
+      margin:48px 0;padding:36px 0;
+      border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+      font-family:var(--display);font-weight:300;font-style:italic;
+      font-size:30px;line-height:1.3;letter-spacing:-0.01em;color:var(--ink);
+      font-variation-settings:"opsz" 96, "SOFT" 100, "WONK" 1;
+    }
+    .pull-quote::before{content:"\201C";color:var(--ctd);margin-right:.05em}
+    .pull-quote::after{content:"\201D";color:var(--ctd);margin-left:.05em}
+    @media (max-width:760px){
+      .prose-grid{grid-template-columns:1fr;gap:18px}
+    }
+
+    /* ============================================================
+       SUITE — three product cards
+       ============================================================ */
+    .suite-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    @media (max-width:1100px){.suite-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:680px){.suite-grid{grid-template-columns:1fr}}
+
+    .suite-card{
+      position:relative;background:var(--surface);
+      border:1px solid var(--rule);border-radius:16px;
+      padding:32px 28px 28px;
+      display:flex;flex-direction:column;min-height:480px;
+      transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .suite-card:hover{
+      transform:translateY(-3px);
+      border-color:var(--navy);
+      box-shadow:0 16px 40px -24px rgba(27,58,107,.25);
+    }
+    .suite-card .wordmark-card{
+      display:inline-flex;align-items:baseline;
+      background:var(--navy-card);color:#fff;border-radius:10px;
+      padding:14px 20px;font-family:'DejaVu Sans', Arial, sans-serif;
+      font-weight:700;font-size:26px;letter-spacing:-0.015em;
+      margin-bottom:24px;align-self:flex-start;
+      line-height:1;
+    }
+    .suite-card .wordmark-card .tm{
+      font-size:10px;font-weight:400;color:#9CA3AF;
+      margin-left:3px;letter-spacing:0;
+      position:relative;top:-0.75em;          /* lift to top-right corner */
+    }
+    .suite-card.ctd .wordmark-card .e{color:var(--ctd-light)}
+    .suite-card.xml .wordmark-card .e{color:var(--xml)}
+    .suite-card.def .wordmark-card .e{color:var(--def)}
+    .suite-card.doc .wordmark-card .e{color:#F59E0B}
+    .suite-card.label .wordmark-card .e{color:#FCA5A5}
+    .suite-card.qa .wordmark-card .e{color:#A78BFA}
+
+    .suite-card .product-tagline{
+      font-size:15px;color:var(--ink-2);margin:0 0 24px;
+    }
+    .suite-card h3{
+      font-family:var(--display);font-weight:300;
+      font-size:30px;line-height:1.15;letter-spacing:-0.018em;
+      margin:0 0 16px;color:var(--ink);
+      font-variation-settings:"opsz" 96, "SOFT" 50;
+    }
+    .suite-card .desc{
+      font-size:15.5px;line-height:1.55;color:var(--ink-2);margin:0 0 22px;flex:1;
+    }
+    .suite-card .features{
+      list-style:none;margin:0 0 24px;padding:0;
+      border-top:1px solid var(--rule);
+    }
+    .suite-card .features li{
+      padding:10px 0;border-bottom:1px solid var(--rule);
+      font-size:13.5px;color:var(--ink-2);display:flex;gap:10px;align-items:baseline;
+    }
+    .suite-card .features li::before{
+      content:"";width:5px;height:5px;border-radius:50%;
+      flex-shrink:0;transform:translateY(-2px);
+    }
+    .suite-card.ctd .features li::before{background:var(--ctd)}
+    .suite-card.xml .features li::before{background:var(--xml)}
+    .suite-card.def .features li::before{background:var(--def)}
+
+    .suite-card .meta{
+      display:flex;justify-content:space-between;align-items:center;
+      font-family:var(--mono);font-size:11px;color:var(--ink-3);
+      letter-spacing:.1em;text-transform:uppercase;
+    }
+    .suite-card .status-pill{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:4px 10px;border-radius:999px;
+      background:rgba(27,58,107,.06);color:var(--navy);
+      font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.04em;
+    }
+    .suite-card.ctd .status-pill::before,
+    .suite-card.xml .status-pill::before,
+    .suite-card.def .status-pill::before{
+      content:"";width:6px;height:6px;border-radius:50%;
+    }
+    .suite-card.ctd .status-pill::before{background:var(--ctd);box-shadow:0 0 0 3px rgba(59,130,246,.18)}
+    .suite-card.xml .status-pill::before{background:var(--xml);box-shadow:0 0 0 3px rgba(217,119,6,.18)}
+    .suite-card.def .status-pill::before{background:var(--def);box-shadow:0 0 0 3px rgba(16,185,129,.18)}
+
+    /* ============================================================
+       ENGINE — three-layer classification
+       ============================================================ */
+    .engine{
+      background:var(--surface);border:1px solid var(--rule);border-radius:18px;
+      padding:48px;display:grid;grid-template-columns:1.1fr 1fr;gap:56px;
+    }
+    @media (max-width:960px){.engine{grid-template-columns:1fr;padding:32px;gap:32px}}
+
+    .engine-copy h3{
+      font-family:var(--display);font-weight:300;
+      font-size:38px;line-height:1.08;letter-spacing:-0.02em;
+      margin:14px 0 20px;color:var(--ink);
+      font-variation-settings:"opsz" 96, "SOFT" 60;
+    }
+    .engine-copy h3 em{font-style:italic;color:var(--navy);font-variation-settings:"opsz" 96, "SOFT" 100, "WONK" 1}
+    .engine-copy p{font-size:16px;color:var(--ink-2);margin:0 0 18px;line-height:1.6}
+    .accuracy-row{
+      display:flex;gap:24px;align-items:baseline;margin-top:24px;
+      padding-top:24px;border-top:1px solid var(--rule);
+    }
+    .accuracy-row .big{
+      font-family:var(--display);font-weight:300;font-size:54px;line-height:1;
+      color:var(--navy);letter-spacing:-0.025em;
+      font-variation-settings:"opsz" 144;
+    }
+    .accuracy-row .big .pct{font-size:28px;color:var(--ink-3)}
+    .accuracy-row .desc-small{font-size:13px;color:var(--ink-3);max-width:200px}
+
+    /* layer stack */
+    .layers{display:flex;flex-direction:column;gap:14px}
+    .layer{
+      border:1px solid var(--rule);border-radius:12px;padding:20px 22px;
+      background:var(--paper);position:relative;
+    }
+    .layer .l-num{
+      position:absolute;top:18px;right:22px;
+      font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+      color:var(--ink-3);text-transform:uppercase;
+    }
+    .layer .l-title{
+      display:flex;align-items:center;gap:12px;margin-bottom:8px;
+    }
+    .layer .l-title strong{
+      font-family:var(--sans);font-weight:600;font-size:16px;color:var(--ink);
+    }
+    .layer .l-title .l-tag{
+      font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+      padding:3px 8px;border-radius:4px;background:var(--paper-2);
+      color:var(--ink-2);text-transform:uppercase;
+    }
+    .layer p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+    .layer .l-bar{
+      margin-top:14px;height:4px;background:var(--rule);border-radius:2px;overflow:hidden;
+    }
+    .layer .l-bar > span{
+      display:block;height:100%;border-radius:2px;
+      background:linear-gradient(90deg, var(--navy), var(--ctd));
+    }
+    .layer.l1 .l-bar > span{width:50%}
+    .layer.l2 .l-bar > span{width:80%}
+    .layer.l3 .l-bar > span{width:96%;background:linear-gradient(90deg, var(--ctd), var(--def))}
+
+    /* ============================================================
+       PROCESS / WORKFLOW
+       ============================================================ */
+    .pipeline{
+      display:grid;grid-template-columns:repeat(6,1fr);gap:0;
+      border:1px solid var(--rule);border-radius:14px;overflow:hidden;
+      background:var(--surface);
+    }
+    @media (max-width:960px){
+      .pipeline{grid-template-columns:repeat(2,1fr)}
+    }
+    .step{
+      padding:28px 22px 24px;border-right:1px solid var(--rule);position:relative;
+    }
+    .step:last-child{border-right:none}
+    @media (max-width:960px){
+      .step{border-right:1px solid var(--rule)}
+      .step:nth-child(2n){border-right:none}
+      .step:nth-child(n+1):nth-child(-n+4){border-bottom:1px solid var(--rule)}
+    }
+    .step .step-num{
+      font-family:var(--mono);font-size:11px;color:var(--ink-3);
+      letter-spacing:.1em;
+    }
+    .step .step-title{
+      margin:8px 0 6px;font-family:var(--sans);font-weight:600;font-size:15px;color:var(--ink);
+    }
+    .step .step-desc{font-size:13px;color:var(--ink-2);line-height:1.5;margin:0}
+
+    /* ============================================================
+       CODE / XML demo
+       ============================================================ */
+    .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+    @media (max-width:960px){.demo-grid{grid-template-columns:1fr}}
+    .demo-copy h3{
+      font-family:var(--display);font-weight:300;font-size:36px;line-height:1.1;
+      letter-spacing:-0.02em;margin:14px 0 18px;color:var(--ink);
+      font-variation-settings:"opsz" 96, "SOFT" 60;
+    }
+    .demo-copy h3 em{font-style:italic;color:var(--navy);font-variation-settings:"opsz" 96, "SOFT" 100, "WONK" 1}
+    .demo-copy p{font-size:16px;color:var(--ink-2);line-height:1.6}
+
+    .terminal{
+      background:#0F1A2E;border-radius:14px;overflow:hidden;
+      box-shadow:0 30px 60px -30px rgba(15,26,46,.5);
+      border:1px solid #1F2C46;
+    }
+    .terminal-bar{
+      display:flex;align-items:center;gap:8px;
+      padding:14px 18px;background:#13213B;border-bottom:1px solid #1F2C46;
+    }
+    .terminal-bar .dot{width:11px;height:11px;border-radius:50%;background:#3A4660}
+    .terminal-bar .file{
+      margin-left:14px;font-family:var(--mono);font-size:12px;
+      color:#9CA3AF;letter-spacing:.04em;
+    }
+    .terminal pre{
+      margin:0;padding:24px;font-family:var(--mono);font-size:12.5px;line-height:1.65;
+      color:#D1D5DB;overflow-x:auto;
+    }
+    .terminal .tag{color:#7DD3FC}
+    .terminal .attr{color:#FBBF24}
+    .terminal .val{color:#86EFAC}
+    .terminal .com{color:#6B7280}
+    .terminal .lit{color:#F0ABFC}
+
+    /* ============================================================
+       COMPLIANCE BAND
+       ============================================================ */
+    .compliance{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    }
+    @media (max-width:840px){.compliance{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:480px){.compliance{grid-template-columns:1fr}}
+    .compliance .item{
+      padding:28px 24px;border:1px solid var(--rule);border-radius:12px;
+      background:var(--surface);
+    }
+    .compliance .item .badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:38px;height:38px;border-radius:10px;
+      background:rgba(27,58,107,.08);color:var(--navy);
+      margin-bottom:14px;
+    }
+    .compliance .item h4{
+      margin:0 0 6px;font-family:var(--sans);font-weight:600;font-size:15px;color:var(--ink);
+    }
+    .compliance .item p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+
+    /* ============================================================
+       ABOUT
+       ============================================================ */
+    .about-grid{display:grid;grid-template-columns:1fr;gap:0;align-items:start;max-width:880px}
+    @media (max-width:840px){.about-grid{grid-template-columns:1fr;gap:32px}}
+    .about-card{
+      background:var(--navy);color:#fff;border-radius:18px;padding:40px;
+      position:relative;overflow:hidden;
+    }
+    .about-card::before{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 100% 0%, rgba(147,197,253,.18), transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(16,185,129,.12), transparent 50%);
+      pointer-events:none;
+    }
+    .about-card .eyebrow{color:rgba(255,255,255,.55);position:relative}
+    .about-card h3{
+      position:relative;font-family:var(--display);font-weight:300;
+      font-size:34px;line-height:1.15;letter-spacing:-0.02em;margin:14px 0 18px;
+      font-variation-settings:"opsz" 96, "SOFT" 60;
+    }
+    .about-card h3 em{font-style:italic;color:var(--ctd-light);font-variation-settings:"opsz" 96, "SOFT" 100, "WONK" 1}
+
+    /* Flat brand wordmark — for use inline on the navy about-card (no duplicate tile) */
+    .about-card .wm-flat{
+      font-family:'DejaVu Sans', Arial, sans-serif;font-weight:700;
+      letter-spacing:-0.015em;color:#fff;
+    }
+    .about-card .wm-flat .e{color:var(--ctd-light)}
+    .about-card .wm-flat .tm{
+      font-size:0.36em;font-weight:400;color:#9CA3AF;
+      margin-left:2px;letter-spacing:0;
+      position:relative;top:-0.7em;
+    }
+    .about-card p{position:relative;color:rgba(255,255,255,.78);line-height:1.6;font-size:15.5px;margin:0 0 18px}
+    .about-card dl{position:relative;margin:24px 0 0;display:grid;grid-template-columns:1fr;gap:14px}
+    .about-card dl > div{
+      display:flex;justify-content:space-between;gap:24px;
+      padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .about-card dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+      color:rgba(255,255,255,.5);text-transform:uppercase}
+    .about-card dd{margin:0;font-size:14px;font-weight:500;color:#fff;text-align:right}
+
+    .principles-list{margin:0;padding:0;list-style:none}
+    .principles-list li{
+      padding:24px 0;border-top:1px solid var(--rule);
+    }
+    .principles-list li:last-child{border-bottom:1px solid var(--rule)}
+    .principles-list li .num{
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+      letter-spacing:.12em;margin-bottom:6px;display:block;
+    }
+    .principles-list li h4{
+      margin:0 0 6px;font-family:var(--display);font-weight:400;font-size:22px;
+      color:var(--ink);letter-spacing:-0.012em;
+      font-variation-settings:"opsz" 72, "SOFT" 40;
+    }
+    .principles-list li p{margin:0;color:var(--ink-2);font-size:15px;line-height:1.55}
+
+    /* ============================================================
+       CTA BAND
+       ============================================================ */
+    .cta-band{
+      background:var(--navy);color:#fff;
+      padding:96px 0;border-top:1px solid var(--navy-deep);position:relative;overflow:hidden;
+    }
+    .cta-band::before{
+      content:"";position:absolute;inset:0;pointer-events:none;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size:64px 64px;
+      mask-image:radial-gradient(ellipse 80% 100% at 50% 50%, black 30%, transparent 80%);
+      -webkit-mask-image:radial-gradient(ellipse 80% 100% at 50% 50%, black 30%, transparent 80%);
+    }
+    .cta-band .wrap{position:relative}
+    .cta-band h2{
+      font-family:var(--display);font-weight:300;
+      font-size:clamp(40px, 5.4vw, 76px);line-height:1.02;letter-spacing:-0.025em;
+      margin:0 0 20px;max-width:960px;
+      font-variation-settings:"opsz" 144, "SOFT" 60;
+    }
+    .cta-band h2 em{font-style:italic;color:var(--ctd-light);font-variation-settings:"opsz" 144, "SOFT" 100, "WONK" 1}
+    .cta-band p{font-size:19px;color:rgba(255,255,255,.78);margin:0 0 36px;max-width:580px;line-height:1.55}
+    .cta-band .btn-primary{background:#fff;color:var(--navy)}
+    .cta-band .btn-primary:hover{background:var(--ctd-light);color:var(--navy-deep)}
+    .cta-band .btn-ghost{border-color:rgba(255,255,255,.3);color:#fff}
+    .cta-band .btn-ghost:hover{border-color:#fff}
+    .cta-band .btn-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+    .cta-band .btn-row .btn{padding:14px 24px;font-size:15px}
+
+    .ic-meta{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+      padding-top:32px;border-top:1px solid rgba(255,255,255,.18);
+    }
+    @media (max-width:760px){.ic-meta{grid-template-columns:1fr;gap:18px}}
+    .ic-meta div small{
+      display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+      color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:6px;
+    }
+    .ic-meta div strong{font-weight:500;font-size:15.5px}
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer{padding:64px 0 36px;border-top:1px solid var(--rule);background:var(--paper)}
+    .foot-grid{
+      display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:36px;margin-bottom:48px;
+    }
+    @media (max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr 1fr;gap:32px}}
+    @media (max-width:680px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+    .foot-brand{max-width:340px}
+    .foot-brand p{font-size:14px;color:var(--ink-2);line-height:1.55;margin:14px 0 0}
+    .foot-col h5{
+      font-family:var(--mono);font-size:11px;text-transform:uppercase;
+      letter-spacing:.14em;color:var(--ink-3);margin:0 0 14px;font-weight:500;
+    }
+    .foot-col ul{list-style:none;margin:0;padding:0}
+    .foot-col li{margin:0 0 10px}
+    .foot-col a{
+      color:var(--ink-2);text-decoration:none;font-size:14px;
+      transition:color .15s ease;
+    }
+    .foot-col a:hover{color:var(--navy)}
+    .foot-bottom{
+      display:flex;justify-content:space-between;align-items:center;
+      padding-top:24px;border-top:1px solid var(--rule);
+      font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;
+      color:var(--ink-3);
+    }
+    .foot-bottom a{color:var(--ink-3);text-decoration:none}
+    .foot-bottom a:hover{color:var(--navy)}
+    @media (max-width:600px){.foot-bottom{flex-direction:column;gap:10px;align-items:flex-start}}
+
+    /* ============================================================
+       Reveal-on-scroll (CSS-only)
+       ============================================================ */
+    @media (prefers-reduced-motion: no-preference){
+      .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease, transform .7s ease}
+      .reveal.in{opacity:1;transform:none}
+    }
+
+    ::selection{background:var(--ctd-light);color:var(--navy-deep)}
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header class="site">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <span class="brand-wordmark">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+        </a>
+        <nav class="links">
+          <a href="#suite">Suite</a>
+          <a href="#engine">Engine</a>
+          <a href="#process">Process</a>
+          <a href="#compliance">Compliance</a>
+          <a href="#company">Company</a>
+          <a class="btn btn-primary" href="#contact">Request a demo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <main id="top">
+    <section class="hero">
+      <div class="grid-bg"></div>
+      <div class="wrap hero-inner">
+
+        <div class="filing-meta">
+          <span><span class="dot"></span> AutoeCTD Inc. · Federally incorporated</span>
+          <span>Vol. 1 · Issue 01 · 2026</span>
+        </div>
+
+        <div class="reveal">
+          <div class="hero-eyebrow"><em>It's time to reinvent the wheel.</em></div>
+          <h1 class="headline">
+            Regulatory Submissions<br>
+            built by <em>Professionals</em>.<br>
+            Accelerated by <span class="ampersand">AI.</span>
+          </h1>
+          <p class="hero-lede">
+            AutoeCTD is the regulatory submission platform built by RA professionals,
+            for RA professionals — with AI doing the repetitive work and your reviewers
+            making every decision that matters. Authoring, labeling, eCTD, and
+            deficiency responses, in one suite.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary with-arrow" href="#contact">Book a 30-minute walkthrough</a>
+            <a class="btn btn-ghost" href="#suite">See the suite</a>
+          </div>
+        </div>
+
+        <div class="stats reveal">
+          <div>
+            <div class="stat-num">90<span class="unit">%+</span></div>
+            <div class="stat-label">Document classification accuracy goal with the full three-layer engine.</div>
+          </div>
+          <div>
+            <div class="stat-num">6<span class="unit">×</span></div>
+            <div class="stat-label">Products in the suite. Authoring, labeling, XML, eCTD, deficiency responses, and quality lifecycle.</div>
+          </div>
+          <div>
+            <div class="stat-num">3</div>
+            <div class="stat-label">Major pharmaceutical markets — built for jurisdictions like the FDA, EMA, and Health Canada, and any agency that accepts the eCTD format.</div>
+          </div>
+          <div>
+            <div class="stat-num">0</div>
+            <div class="stat-label">Legacy compromises. AI-native architecture, not bolted on.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         APP MOCKUP — visual anchor under hero
+         ============================================================ -->
+    <section class="app-mockup-wrap">
+      <div class="wrap">
+        <div class="browser-frame reveal">
+          <div class="browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">app.autoectd.com / submissions</div>
+            <div style="width:50px"></div>
+          </div>
+          <div class="app-grid">
+            <aside class="app-sidebar">
+              <div class="brand-block">
+                <span class="wm">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+                <div class="subtitle">Submission Platform</div>
+              </div>
+              <div class="nav-item active"><span class="dot"></span> Submissions</div>
+              <div class="nav-item">＋ New Submission</div>
+              <div class="nav-item">📄 Documents</div>
+              <div class="nav-item">⚙ Settings</div>
+              <div class="nav-item">📋 Audit Log</div>
+            </aside>
+            <main class="app-main">
+              <div class="app-h">
+                <h3>Active submissions</h3>
+                <span class="new-pill">+ New</span>
+              </div>
+
+              <div class="submission-row">
+                <div>
+                  <div class="name">SAMPLE-DRUG-A</div>
+                  <div class="meta-line">NDA-000001 · Module 1–5 · 247 documents</div>
+                </div>
+                <div class="progress"><span style="width:100%"></span></div>
+                <span class="pct">100%</span>
+                <span class="badge-pill ready">Ready</span>
+              </div>
+
+              <div class="submission-row">
+                <div>
+                  <div class="name">SAMPLE-DRUG-B</div>
+                  <div class="meta-line">IND-000002 · Module 2–5 · 156 documents</div>
+                </div>
+                <div class="progress"><span style="width:78%"></span></div>
+                <span class="pct">78%</span>
+                <span class="badge-pill review">Reviewing</span>
+              </div>
+
+              <div class="submission-row">
+                <div>
+                  <div class="name">SAMPLE-DRUG-C</div>
+                  <div class="meta-line">NDA-000003 · Module 4 · 89 documents</div>
+                </div>
+                <div class="progress"><span style="width:42%"></span></div>
+                <span class="pct">42%</span>
+                <span class="badge-pill classify">Classifying</span>
+              </div>
+            </main>
+          </div>
+        </div>
+
+        <p style="text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:22px;letter-spacing:.04em">
+          ILLUSTRATIVE INTERFACE · DRUG NAMES AND APPLICATION NUMBERS ARE FICTITIOUS
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROBLEM / SOLUTION
+         ============================================================ -->
+    <section class="band" id="why">
+      <div class="wrap prose-grid reveal">
+        <div class="eyebrow-wrap">
+          <div class="eyebrow">§ 01 — The thesis</div>
+        </div>
+        <div class="prose">
+          <p class="lead">
+            Every regulatory submission tool on the market today was designed before
+            modern AI existed. The result is software that asks Regulatory Affairs
+            professionals to do the AI's job — manually classifying, naming, and
+            wiring up thousands of documents, one drag at a time.
+          </p>
+          <p>
+            We built AutoeCTD on a simple premise: the work of compiling an eCTD submission for
+            jurisdictions like the FDA, Health Canada, or the EMA — or any agency that accepts
+            the format — shouldn't take weeks of a senior reviewer's time. The intelligence to
+            do most of it well already exists — it just hasn't been put inside the tools your team uses.
+          </p>
+          <div class="pull-quote">
+            We don't replace Regulatory Affairs judgment. We give it eight hours of
+            its workday back.
+          </div>
+          <p>
+            Our customers are mid-size pharma teams with multiple marketed products,
+            high submission volume, and a sharp answer to the question
+            <em>"why are we still naming PDFs by hand?"</em> If that's you, keep reading.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SUITE
+         ============================================================ -->
+    <section class="band alt" id="suite">
+      <div class="wrap">
+
+        <div class="section-head reveal">
+          <div class="eyebrow-wrap">
+            <div class="eyebrow">§ 02 — The Auto<em style="font-style:italic">e</em>Regulatory Suite</div>
+          </div>
+          <h2>One platform, six workflows. <em>From document authoring to post-approval lifecycle.</em></h2>
+        </div>
+
+        <div class="suite-grid">
+
+          <!-- AutoeCTD -->
+          <article class="suite-card ctd reveal">
+            <div class="wordmark-card">Auto<span class="e">e</span>CTD<span class="tm">™</span></div>
+            <p class="product-tagline">eCTD submission packaging for jurisdictions like the FDA, EMA, and Health Canada — and any agency that accepts the format.</p>
+            <h3>Drop a folder.<br>Get a valid sequence.</h3>
+            <p class="desc">
+              Upload your raw documents. Our classification engine assigns them to the
+              correct ICH M4 Module 1–5 sections, auto-fills the regional cover form,
+              computes MD5 checksums, and writes the eCTD XML backbone. You review.
+              We package — for whichever agency you're filing with.
+            </p>
+            <ul class="features">
+              <li>AI document classification into ICH M4 Module 1–5 sections</li>
+              <li>Regional cover form auto-population (FDA Form 356h, Health Canada equivalents, more)</li>
+              <li>eCTD v3.2.2 XML backbone with regional adapters</li>
+              <li>MD5 integrity checksums for every leaf</li>
+              <li>SharePoint package delivery</li>
+            </ul>
+            <div class="meta">
+              <span class="status-pill">In pilot</span>
+              <span>Multi-jurisdiction · ICH M4</span>
+            </div>
+          </article>
+
+          <!-- AutoeXML -->
+          <article class="suite-card xml reveal">
+            <div class="wordmark-card">Auto<span class="e">e</span>XML<span class="tm">™</span></div>
+            <p class="product-tagline">Regulatory XML automation — FDA SPL and Health Canada XML PM.</p>
+            <h3>From Word draft<br>to gateway-ready XML.</h3>
+            <p class="desc">
+              Drop in a labeling document. AutoeXML extracts the sections, classifies
+              them against jurisdiction-specific code libraries (FDA SPL / Health Canada
+              SPM 2020), validates against official vocabularies, and emits schema-valid
+              XML — ready for ESG transmission.
+            </p>
+            <ul class="features">
+              <li>FDA SPL v3 + Health Canada SPM 2020 adapters</li>
+              <li>Three-layer classification with LOINC and HPFB code libraries</li>
+              <li>Live validation against official FDA and HC vocabularies</li>
+              <li>OTC, REMS, establishment registration, drug listing</li>
+              <li>e-signature workflow with append-only audit trail</li>
+            </ul>
+            <div class="meta">
+              <span class="status-pill">In pilot</span>
+              <span>FDA SPL · HC SPM 2020</span>
+            </div>
+          </article>
+
+          <!-- AutoeDEF -->
+          <article class="suite-card def reveal">
+            <div class="wordmark-card">Auto<span class="e">e</span>DEF<span class="tm">™</span></div>
+            <p class="product-tagline">Deficiency response intelligence.</p>
+            <h3>Never write the same response twice.</h3>
+            <p class="desc">
+              AutoeDEF reads incoming agency correspondence, extracts each deficiency
+              point, and drafts a response grounded in your own historical submissions.
+              Track what was accepted, what was rejected, and benchmark your performance
+              by category and agency.
+            </p>
+            <ul class="features">
+              <li>Automated deficiency extraction from agency correspondence</li>
+              <li>Vector search across your historical response library</li>
+              <li>Grounded draft generation with source citation</li>
+              <li>Outcome tracking — Accepted / Rejected / Partial</li>
+              <li>Response effectiveness benchmarking</li>
+            </ul>
+            <div class="meta">
+              <span class="status-pill">In pilot</span>
+              <span>Multi-agency</span>
+            </div>
+          </article>
+
+          <!-- AutoeDOC -->
+          <article class="suite-card doc reveal">
+            <div class="wordmark-card">Auto<span class="e">e</span>DOC<span class="tm">™</span></div>
+            <p class="product-tagline">Regulatory document authoring — Module 2 summaries, prescribing information, and submission-ready drafts.</p>
+            <h3>Draft from source.<br>Not from a blank page.</h3>
+            <p class="desc">
+              AutoeDOC drafts the documents that go into a regulatory submission — Quality
+              Overall Summaries, Clinical and Nonclinical Overviews, prescribing information,
+              risk management plans — using your source data and prior-approved precedent.
+              Your senior writers review, refine, and approve. The blank-page problem disappears.
+            </p>
+            <ul class="features">
+              <li>Module 2 summary drafting from CMC, nonclinical, and clinical data</li>
+              <li>Product Monograph and prescribing information generation</li>
+              <li>Legacy PM conversion to the 2020 Master Template</li>
+              <li>Source-grounded drafting with citation back to underlying study reports</li>
+              <li>Append-only audit trail of every AI suggestion and human edit</li>
+            </ul>
+            <div class="meta">
+              <span class="status-pill">In pilot</span>
+              <span>FDA · Health Canada · ICH M4</span>
+            </div>
+          </article>
+
+          <!-- AutoeLABEL -->
+          <article class="suite-card label reveal">
+            <div class="wordmark-card">Auto<span class="e">e</span>LABEL<span class="tm">™</span></div>
+            <p class="product-tagline">Branded and generic drug labeling — creation, updates, and reference-product alignment.</p>
+            <h3>One label engine.<br>Brand and generic.</h3>
+            <p class="desc">
+              AutoeLABEL creates new drug labels and keeps generic labels aligned with the
+              Canadian Reference Product. When the brand updates a safety section, the generic
+              label updates with a drafted change for your team to review and submit. No more
+              manual diffing across hundreds of generic SKUs.
+            </p>
+            <ul class="features">
+              <li>Branded label authoring from prescribing information and CMC data</li>
+              <li>Generic label maintenance with automatic CRP alignment</li>
+              <li>Brand safety update detection across reference product sources</li>
+              <li>Side-by-side diff for review and submission of label changes</li>
+              <li>Bilingual handling for Health Canada English/French requirements</li>
+            </ul>
+            <div class="meta">
+              <span class="status-pill">In active development</span>
+              <span>FDA · Health Canada</span>
+            </div>
+          </article>
+
+          <!-- AutoeQA -->
+          <article class="suite-card qa reveal">
+            <div class="wordmark-card">Auto<span class="e">e</span>QA<span class="tm">™</span></div>
+            <p class="product-tagline">Quality lifecycle management — change controls, deviations, and CAPA workflows.</p>
+            <h3>Quality events.<br>Connected to submissions.</h3>
+            <p class="desc">
+              AutoeQA handles change controls, deviation investigations, and CAPA workflows —
+              connected directly to the regulatory submission pipeline. When a manufacturing
+              change is approved, the downstream label and submission updates are drafted
+              automatically. Quality and Regulatory, finally talking to each other.
+            </p>
+            <ul class="features">
+              <li>Change control workflow with regulatory impact assessment</li>
+              <li>Deviation and investigation case management</li>
+              <li>CAPA tracking with effectiveness review</li>
+              <li>Auto-trigger of downstream label and submission updates</li>
+              <li>21 CFR Part 11 audit trail across the quality lifecycle</li>
+            </ul>
+            <div class="meta">
+              <span class="status-pill">On the roadmap</span>
+              <span>2026–2027</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ENGINE
+         ============================================================ -->
+    <section class="band" id="engine">
+      <div class="wrap">
+
+        <div class="section-head reveal">
+          <div class="eyebrow-wrap">
+            <div class="eyebrow">§ 03 — The classification engine</div>
+          </div>
+          <h2>Three layers of intelligence. <em>One auditable decision per document.</em></h2>
+        </div>
+
+        <div class="engine reveal">
+          <div class="engine-copy">
+            <div class="eyebrow">How it works</div>
+            <h3>Cheap signals first. <em>Expensive AI last.</em></h3>
+            <p>
+              Most AI classification tools throw every document at a large language
+              model and call it a day. That's slow, expensive, and impossible to audit.
+            </p>
+            <p>
+              AutoeCTD layers four cheap deterministic signals first — filename
+              patterns, version inference, prior-sequence cross-reference, file-size
+              outliers — then escalates only the residual through a manufacturer-aware
+              prompt library, and finally a generic AI fallback. Every decision is
+              logged with the layer it came from and a confidence score.
+            </p>
+            <div class="accuracy-row">
+              <div>
+                <div class="big">90<span class="pct">%+</span></div>
+                <div class="desc-small">Combined accuracy target with all three layers and a mature Scan &amp; Learn library.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="layers">
+            <div class="layer l1">
+              <span class="l-num">Layer 01</span>
+              <div class="l-title">
+                <strong>Deterministic</strong>
+                <span class="l-tag">No AI</span>
+              </div>
+              <p>Filename pattern match · version inference · prior-sequence cross-reference · file-size outlier check. Handles roughly half of every submission at zero token cost.</p>
+              <div class="l-bar"><span></span></div>
+            </div>
+            <div class="layer l2">
+              <span class="l-num">Layer 02</span>
+              <div class="l-title">
+                <strong>Prompt library</strong>
+                <span class="l-tag">Manufacturer-aware</span>
+              </div>
+              <p>Manufacturer-specific prompts plus first-page text. Confidence stacks across DS Manufacturer, DP Manufacturer, Sponsor, and CRO. Scan &amp; Learn auto-populates the library from each new submission record.</p>
+              <div class="l-bar"><span></span></div>
+            </div>
+            <div class="layer l3">
+              <span class="l-num">Layer 03</span>
+              <div class="l-title">
+                <strong>Generic AI fallback</strong>
+                <span class="l-tag">GPT-4o · Claude</span>
+              </div>
+              <p>Filename plus ICH keyword mapping plus full-content reasoning for the residual edge cases — the appendices, the ambiguous Module 2 summaries, the rare 1.3.1 vs 1.3.2 calls.</p>
+              <div class="l-bar"><span></span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROCESS
+         ============================================================ -->
+    <section class="band alt" id="process">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow-wrap">
+            <div class="eyebrow">§ 04 — End-to-end</div>
+          </div>
+          <h2>From raw documents to gateway-ready package. <em>In a single afternoon.</em></h2>
+        </div>
+
+        <div class="pipeline reveal">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-title">Ingest</div>
+            <p class="step-desc">Drop a folder. Word, PDF, native files. Drag and drop or SharePoint sync.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-title">Classify</div>
+            <p class="step-desc">Three-layer engine assigns every document to its eCTD section with a confidence score.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-title">Review</div>
+            <p class="step-desc">Confirm, override, and re-map in a split-pane review UI built for senior reviewers.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-title">Hyperlink</div>
+            <p class="step-desc">PDF cross-references and Module 2 to Module 5 link annotations applied automatically.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">05</div>
+            <div class="step-title">Checksum</div>
+            <p class="step-desc">MD5 integrity hashes computed for every leaf in the sequence and recorded in the backbone.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">06</div>
+            <div class="step-title">Package</div>
+            <p class="step-desc">Valid eCTD v3.2.2 XML backbone written. Sequence delivered to SharePoint, ready for ESG.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DEMO TERMINAL
+         ============================================================ -->
+    <section class="band" id="demo">
+      <div class="wrap">
+        <div class="demo-grid reveal">
+          <div class="demo-copy">
+            <div class="eyebrow">§ 05 — Output you can read</div>
+            <h3>Schema-valid XML. <em>Every time.</em></h3>
+            <p>
+              Whether it's an eCTD index, an FDA SPL, or a Health Canada XML PM,
+              AutoeCTD emits backbone XML you can hand to a regulatory publishing
+              QA reviewer without flinching. Validated against official vocabularies.
+              Signed with MD5 leaf checksums. Ready for the gateway.
+            </p>
+          </div>
+          <div class="terminal" aria-hidden="true">
+            <div class="terminal-bar">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="file">us-regional.xml · sequence 0004</span>
+            </div>
+<pre><span class="com">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag">&lt;ectd:ectd</span>
+  <span class="attr">xmlns:ectd</span>=<span class="val">"http://www.ich.org/ectd"</span>
+  <span class="attr">dtd-version</span>=<span class="val">"3.2.2"</span>&gt;
+  <span class="tag">&lt;ectd:m1-administrative-information&gt;</span>
+    <span class="tag">&lt;ectd:m1-1-forms&gt;</span>
+      <span class="tag">&lt;ectd:leaf</span> <span class="attr">ID</span>=<span class="val">"l001"</span>
+            <span class="attr">operation</span>=<span class="val">"new"</span>
+            <span class="attr">checksum</span>=<span class="val">"d41d8cd98f00b204..."</span>
+            <span class="attr">checksum-type</span>=<span class="val">"md5"</span>&gt;
+        <span class="tag">&lt;ectd:title&gt;</span><span class="lit">Form FDA 356h</span><span class="tag">&lt;/ectd:title&gt;</span>
+      <span class="tag">&lt;/ectd:leaf&gt;</span>
+    <span class="tag">&lt;/ectd:m1-1-forms&gt;</span>
+  <span class="tag">&lt;/ectd:m1-administrative-information&gt;</span>
+  <span class="com">&lt;!-- 1,847 leaves classified --&gt;</span>
+  <span class="com">&lt;!-- 90%+ auto-confirmed (target) --&gt;</span>
+<span class="tag">&lt;/ectd:ectd&gt;</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPLIANCE
+         ============================================================ -->
+    <section class="band alt" id="compliance">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow-wrap">
+            <div class="eyebrow">§ 06 — Built for regulated environments</div>
+          </div>
+          <h2>Compliance is the <em>foundation</em>, not the upgrade.</h2>
+        </div>
+
+        <div class="compliance reveal">
+          <div class="item">
+            <div class="badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h4>Designed for 21 CFR Part 11</h4>
+            <p>Append-only audit trail, electronic signatures, role-based access, complete record reconstruction. Working toward formal Part 11 readiness.</p>
+          </div>
+          <div class="item">
+            <div class="badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="6" width="16" height="14" rx="2"/><path d="M9 6V4a3 3 0 016 0v2"/></svg>
+            </div>
+            <h4>Preparing for SOC 2</h4>
+            <p>Architected against the Trust Services Criteria from day one. Pre-attestation tooling and policies in place.</p>
+          </div>
+          <div class="item">
+            <div class="badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/></svg>
+            </div>
+            <h4>Cloud-agnostic infrastructure</h4>
+            <p>Built today on Microsoft Azure — Azure SQL, Azure OpenAI, Blob Storage, Key Vault — and architected to deploy on AWS, GCP, or your private cloud. Canadian data residency available.</p>
+          </div>
+          <div class="item">
+            <div class="badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg>
+            </div>
+            <h4>ICH eCTD v3.2.2</h4>
+            <p>Today. eCTD v4.0 on the roadmap, aligned with FDA and ICH adoption phases through ~2029.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPANY
+         ============================================================ -->
+    <section class="band" id="company">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow-wrap">
+            <div class="eyebrow">§ 07 — The company</div>
+          </div>
+          <h2>An independent Canadian software company, built deliberately.</h2>
+        </div>
+
+        <div class="about-grid">
+          <ul class="principles-list reveal">
+            <li>
+              <span class="num">PRINCIPLE 01</span>
+              <h4>Built by Regulatory Affairs.</h4>
+              <p>Founded and led by a senior RA/QA professional with a decade of pharmaceutical industry experience. We know what an FDA reviewer is going to flag because we've been on the other end of the email.</p>
+            </li>
+            <li>
+              <span class="num">PRINCIPLE 02</span>
+              <h4>AI augments. Professionals decide.</h4>
+              <p>The architecture starts with classification and works outward — but every output is reviewable, overridable, and auditable. Our competitors retrofitted "AI features" onto 20-year-old document publishing tools. We built the opposite: a tool where AI does the repetitive work and your reviewers approve every regulatory call.</p>
+            </li>
+            <li>
+              <span class="num">PRINCIPLE 03</span>
+              <h4>Bootstrapped on purpose.</h4>
+              <p>No outside capital. No board pressure to over-promise. Pricing positioned below incumbent enterprise contracts because the math actually works.</p>
+            </li>
+            <li>
+              <span class="num">PRINCIPLE 04</span>
+              <h4>Pilot-first, contract-second.</h4>
+              <p>Every customer relationship begins with a real submission and a real outcome. We don't sell software you'll use later — we ship work you can take to the FDA this quarter.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <section class="cta-band" id="contact">
+      <div class="wrap">
+        <h2 class="reveal">Bring us your<br>next <em>submission.</em></h2>
+        <p class="reveal">
+          Pilot AutoeCTD on a real eCTD submission, label update, or deficiency response —
+          for any agency that accepts the format. Thirty-minute walkthrough.
+          No procurement loop required to start.
+        </p>
+        <div class="btn-row reveal">
+          <a class="btn btn-primary" href="mailto:sales@autoectd.com?subject=AutoeCTD%20pilot%20interest">Start a pilot conversation →</a>
+          <a class="btn btn-ghost" href="mailto:sales@autoectd.com">sales@autoectd.com</a>
+        </div>
+        <div class="ic-meta reveal">
+          <div><small>Sales</small><strong>sales@autoectd.com</strong></div>
+          <div><small>Headquarters</small><strong>Greater Toronto Area, Canada</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="#top">
+            <span class="brand-wordmark">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+          </a>
+          <p>The AI-native regulatory submission platform. eCTD packaging, XML labeling, and deficiency response — engineered for the way Regulatory Affairs teams actually work.</p>
+        </div>
+        <div class="foot-col">
+          <h5>Suite</h5>
+          <ul>
+            <li><a href="#suite">AutoeCTD</a></li>
+            <li><a href="#suite">AutoeXML</a></li>
+            <li><a href="#suite">AutoeDEF</a></li>
+            <li><a href="#suite">AutoeDOC</a></li>
+            <li><a href="#suite">AutoeLABEL</a></li>
+            <li><a href="#suite">AutoeQA</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="#engine">Classification engine</a></li>
+            <li><a href="#process">Submission pipeline</a></li>
+            <li><a href="#compliance">Compliance</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="#company">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="mailto:sales@autoectd.com">Sales</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-disclaimers" style="border-top:1px solid rgba(255,255,255,.06);margin-top:48px;padding-top:36px;font-family:var(--mono);font-size:11.5px;line-height:1.65;color:rgba(120,113,93,.85);max-width:920px">
+        <p style="margin:0 0 14px"><strong style="color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em;font-weight:500">Disclaimer · </strong>AutoeCTD is a software platform that supports the preparation of regulatory submissions. Use of the platform does not guarantee regulatory approval and is not a substitute for qualified Regulatory Affairs judgment. Customers retain full responsibility for the accuracy, completeness, and submission of all regulatory dossiers.</p>
+        <p style="margin:0 0 14px"><strong style="color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em;font-weight:500">Forward-looking statements · </strong>Statements regarding future product features, certifications, partnerships, or regulatory approvals are forward-looking and subject to change without notice. Current readiness toward formal Part 11 attestation, SOC 2 attestation, and eCTD v4.0 support is in active development.</p>
+        <p style="margin:0 0 14px"><strong style="color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em;font-weight:500">Privacy · </strong>This website does not collect personal information through forms, analytics, or cookies. If you contact us by email, we use that information only to respond to your inquiry.</p>
+        <p style="margin:0"><strong style="color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em;font-weight:500">Trademarks · </strong>AutoeCTD™, AutoeDOC™, AutoeLABEL™, AutoeXML™, AutoeDEF™, and AutoeQA™ are unregistered trademarks of AutoeCTD Inc. All other marks are the property of their respective owners.</p>
+      </div>
+
+      <div class="foot-bottom">
+        <span>© 2026 AutoeCTD Inc. · All rights reserved.</span>
+        <span>Designed for 21 CFR Part 11 · Preparing for SOC 2</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal-on-scroll
+    if ('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting){
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (ev) => {
+        const id = a.getAttribute('href');
+        if (id.length > 1){
+          const t = document.querySelector(id);
+          if (t){ ev.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

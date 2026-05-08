@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index,follow" />
+  <title>Terms of Use — AutoeCTD Inc.</title>
+  <meta name="description" content="Terms of Use for the AutoeCTD Inc. website." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --paper:#F2EEE5;
+      --paper-2:#EBE6DA;
+      --cream:#FAF7F0;
+      --ink:#0F1729;
+      --ink-2:#374151;
+      --ink-3:#6B7280;
+      --rule:#D6CFB9;
+      --navy:#1B3A6B;
+      --navy-deep:#142E55;
+      --ctd:#1B3A6B;
+      --ctd-light:#93C5FD;
+
+      --display:'Fraunces', 'Iowan Old Style', 'Apple Garamond', 'Baskerville', Georgia, serif;
+      --body:'DM Sans', -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif;
+      --mono:'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{
+      margin:0;background:var(--paper);color:var(--ink);
+      font-family:var(--body);font-size:16px;line-height:1.55;
+    }
+    .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+    @media (max-width:760px){.wrap{padding:0 20px}}
+
+    /* HEADER */
+    header.site{
+      position:sticky;top:0;z-index:50;
+      background:rgba(242,238,229,.94);backdrop-filter:saturate(180%) blur(14px);
+      -webkit-backdrop-filter:saturate(180%) blur(14px);
+      border-bottom:1px solid var(--rule);
+    }
+    header.site .nav{
+      display:flex;align-items:center;justify-content:space-between;padding:18px 0;
+    }
+    .brand{display:inline-flex;align-items:center;text-decoration:none;color:inherit}
+    .brand-wordmark{
+      font-family:'DejaVu Sans', Arial, sans-serif;font-weight:700;
+      font-size:18px;letter-spacing:-0.015em;color:#fff;
+      background:var(--navy);padding:8px 14px;border-radius:8px;line-height:1;
+      display:inline-block;
+    }
+    .brand-wordmark .e{color:var(--ctd-light)}
+    .brand-wordmark .tm{
+      font-size:8px;color:#9CA3AF;margin-left:2px;
+      position:relative;top:-0.65em;font-weight:400;
+    }
+    nav.links{display:flex;align-items:center;gap:28px}
+    nav.links a{
+      color:var(--ink-2);text-decoration:none;font-size:14px;font-weight:500;
+      transition:color .15s;
+    }
+    nav.links a:hover{color:var(--navy)}
+    .btn{
+      display:inline-block;text-decoration:none;font-weight:500;font-size:14px;
+      padding:10px 18px;border-radius:999px;line-height:1.2;transition:all .2s;
+      border:1px solid transparent;
+    }
+    .btn-primary{background:var(--navy);color:#fff}
+    .btn-primary:hover{background:var(--navy-deep);color:#fff}
+    /* Hyper-specific override — guarantees nav button text stays white */
+    header.site nav.links a.btn-primary,
+    header.site nav.links a.btn-primary:hover{
+      color:#fff !important;
+    }
+    @media (max-width:760px){nav.links a:not(.btn){display:none}}
+
+    /* LEGAL PAGE */
+    .legal-masthead{
+      padding:80px 0 24px;
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+      letter-spacing:.18em;text-transform:uppercase;
+      display:flex;justify-content:space-between;align-items:center;
+      border-bottom:1px solid var(--rule);
+    }
+    .legal-masthead .dot{
+      display:inline-block;width:8px;height:8px;border-radius:50%;
+      background:#10B981;margin-right:10px;vertical-align:middle;
+    }
+    @media (max-width:600px){.legal-masthead{flex-direction:column;align-items:flex-start;gap:8px}}
+
+    .legal-page{padding:64px 0 96px}
+    .legal-inner{max-width:760px;margin:0 auto}
+
+    .legal-page h1{
+      font-family:var(--display);font-weight:300;
+      font-size:clamp(40px, 5.5vw, 72px);
+      line-height:1.05;letter-spacing:-0.02em;
+      margin:0 0 18px;color:var(--ink);
+      font-variation-settings:"opsz" 144, "SOFT" 60;
+    }
+    .legal-meta{
+      font-family:var(--mono);font-size:12px;color:var(--ink-3);
+      letter-spacing:.05em;margin:0 0 56px;
+      padding-bottom:24px;border-bottom:1px solid var(--rule);
+    }
+
+    .legal-page section{margin-bottom:44px}
+    .legal-page .section-num{
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+      letter-spacing:.14em;text-transform:uppercase;
+      margin:0 0 8px;
+    }
+    .legal-page h2{
+      font-family:var(--display);font-weight:400;
+      font-size:clamp(22px, 2.6vw, 28px);
+      line-height:1.2;letter-spacing:-0.012em;
+      margin:0 0 16px;color:var(--ink);
+      font-variation-settings:"opsz" 72, "SOFT" 40;
+    }
+    .legal-page p{
+      margin:0 0 14px;font-size:15.5px;line-height:1.65;color:var(--ink-2);
+    }
+    .legal-page p strong{color:var(--ink);font-weight:600}
+    .legal-page ul{
+      margin:0 0 14px;padding:0 0 0 22px;
+      font-size:15.5px;line-height:1.65;color:var(--ink-2);
+    }
+    .legal-page ul li{margin:0 0 6px}
+    .legal-page a{color:var(--navy);text-decoration:underline}
+    .legal-page a:hover{color:var(--navy-deep)}
+    .legal-page address{
+      font-style:normal;
+      padding:18px 22px;background:var(--paper-2);border-radius:8px;
+      margin:0 0 14px;font-size:15px;line-height:1.7;color:var(--ink-2);
+    }
+    .legal-page .legal-block{
+      padding:18px 22px;background:var(--paper-2);border-left:3px solid var(--navy);
+      margin:0 0 18px;font-size:14px;line-height:1.65;
+      letter-spacing:.005em;color:var(--ink-2);
+      text-transform:uppercase;font-weight:500;
+    }
+    .legal-page .legal-block p{
+      margin:0 0 10px;font-size:14px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.005em;
+    }
+    .legal-page .legal-block p:last-child{margin-bottom:0}
+
+    /* FOOTER */
+    footer{padding:64px 0 36px;border-top:1px solid var(--rule);background:var(--paper)}
+    .foot-grid{
+      display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:36px;margin-bottom:48px;
+    }
+    @media (max-width:1000px){.foot-grid{grid-template-columns:1fr 1fr 1fr;gap:32px}}
+    @media (max-width:680px){.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+    .foot-brand{max-width:340px}
+    .foot-brand p{font-size:14px;color:var(--ink-2);line-height:1.55;margin:14px 0 0}
+    .foot-col h5{
+      font-family:var(--mono);font-size:11px;text-transform:uppercase;
+      letter-spacing:.14em;color:var(--ink-3);margin:0 0 14px;font-weight:500;
+    }
+    .foot-col ul{list-style:none;margin:0;padding:0}
+    .foot-col li{margin:0 0 10px}
+    .foot-col a{
+      color:var(--ink-2);text-decoration:none;font-size:14px;
+      transition:color .15s ease;
+    }
+    .foot-col a:hover{color:var(--navy)}
+    .foot-bottom{
+      display:flex;justify-content:space-between;align-items:center;
+      padding-top:24px;border-top:1px solid var(--rule);
+      font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+    }
+    @media (max-width:600px){.foot-bottom{flex-direction:column;gap:10px;align-items:flex-start}}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="index.html">
+          <span class="brand-wordmark">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+        </a>
+        <nav class="links">
+          <a href="index.html#suite">Suite</a>
+          <a href="index.html#engine">Engine</a>
+          <a href="index.html#process">Process</a>
+          <a href="index.html#compliance">Compliance</a>
+          <a href="index.html#company">Company</a>
+          <a class="btn btn-primary" href="index.html#contact">Request a demo</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MASTHEAD -->
+  <div class="wrap">
+    <div class="legal-masthead">
+      <span><span class="dot"></span>AutoeCTD Inc. · Legal · Terms of Use</span>
+      <span>Vol. 1 · Issue 01 · 2026</span>
+    </div>
+  </div>
+
+  <!-- PAGE -->
+  <main class="legal-page">
+    <div class="wrap">
+      <div class="legal-inner">
+
+        <h1>Terms of Use</h1>
+        <div class="legal-meta">Last updated: May 7, 2026</div>
+
+        <section>
+          <p>These Terms of Use ("Terms") govern your access to and use of the website at autoectd.com (the "Site"), operated by AutoeCTD Inc. ("AutoeCTD," "we," "us," or "our"), a corporation federally incorporated in Canada. By accessing or using the Site, you agree to be bound by these Terms. If you do not agree, please do not use the Site.</p>
+          <p>These Terms govern use of the marketing Site only. Use of the AutoeCTD platform, products, or commercial services is governed by separate written agreements between AutoeCTD and the customer.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 01 — Acceptable Use</p>
+          <h2>Use the Site lawfully and in good faith.</h2>
+          <p>You may use this Site only for lawful purposes consistent with these Terms. You agree not to:</p>
+          <ul>
+            <li>Use the Site in any way that violates applicable law or regulation</li>
+            <li>Attempt to gain unauthorized access to the Site, our servers, or any connected systems</li>
+            <li>Interfere with, disrupt, or impose an unreasonable load on the Site or its infrastructure</li>
+            <li>Use automated tools (including bots, scrapers, or spiders) to extract content from the Site without our prior written permission</li>
+            <li>Misrepresent your identity, affiliation, or the source of any communication</li>
+            <li>Transmit malware, viruses, or any other harmful code</li>
+            <li>Frame, mirror, or redistribute Site content without our prior written permission</li>
+            <li>Use the Site to harass, defame, or infringe the rights of any third party</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-num">§ 02 — Intellectual Property</p>
+          <h2>The content and marks on this Site are protected.</h2>
+          <p>All content on this Site — including text, graphics, layouts, logos, designs, source code, and product wordmarks — is the property of AutoeCTD Inc. or its licensors and is protected by Canadian and international copyright, trademark, and other intellectual property laws.</p>
+          <p>The marks <strong>AutoeCTD™, AutoeDOC™, AutoeLABEL™, AutoeXML™, AutoeDEF™,</strong> and <strong>AutoeQA™</strong> are trademarks of AutoeCTD Inc. You may not use these marks, or any confusingly similar marks, without our prior written consent.</p>
+          <p>You may view and download single copies of Site content for your personal, non-commercial reference. You may not republish, redistribute, modify, or commercially exploit any Site content without our express written permission.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 03 — Forward-Looking Statements</p>
+          <h2>Statements about the future are not promises.</h2>
+          <p>The Site may contain statements about future product features, certifications, partnerships, jurisdictions, or capabilities. These are forward-looking statements based on our current expectations and are subject to change without notice. Forward-looking statements include but are not limited to references to:</p>
+          <ul>
+            <li>Future product launches, feature releases, or jurisdiction expansion</li>
+            <li>Pursuit of regulatory or industry certifications such as 21 CFR Part 11 attestation or SOC 2 attestation</li>
+            <li>Future eCTD specification support, including v4.0</li>
+            <li>Roadmap items described as "in pilot," "in active development," or "on the roadmap"</li>
+          </ul>
+          <p>You should not rely on forward-looking statements as guarantees of future outcomes. Actual results, capabilities, and timelines may differ materially from any forward-looking statement.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 04 — No Professional Advice</p>
+          <h2>The Site is informational, not advisory.</h2>
+          <p>Content on this Site is provided for general informational and marketing purposes only. It is not intended as, and should not be construed as, regulatory, legal, medical, scientific, or other professional advice. Use of this Site does not create a consultant–client, professional, or fiduciary relationship between you and AutoeCTD.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 05 — Disclaimer of Warranties</p>
+          <h2>The Site is provided "as is."</h2>
+          <div class="legal-block">
+            <p>The Site and all content are provided "as is" and "as available" without warranty of any kind, express or implied. To the maximum extent permitted by applicable law, AutoeCTD disclaims all warranties, including but not limited to implied warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, and any warranties arising from course of dealing or usage of trade.</p>
+            <p>AutoeCTD does not warrant that the Site will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
+          </div>
+        </section>
+
+        <section>
+          <p class="section-num">§ 06 — Limitation of Liability</p>
+          <h2>Liability is limited.</h2>
+          <div class="legal-block">
+            <p>To the maximum extent permitted by applicable law, AutoeCTD Inc., its directors, officers, employees, and agents will not be liable for any indirect, incidental, special, consequential, or punitive damages — including but not limited to loss of profits, revenue, data, business opportunity, regulatory approval, or goodwill — arising out of or related to your use of the Site or your reliance on its content, regardless of the form of action (contract, tort, negligence, statute, or otherwise) and even if AutoeCTD has been advised of the possibility of such damages.</p>
+          </div>
+          <p><strong>Without limiting the foregoing:</strong></p>
+          <ul>
+            <li>Statements about the AutoeCTD platform's capabilities are descriptive and do not guarantee any specific regulatory, scientific, or commercial outcome</li>
+            <li>AutoeCTD does not represent or warrant that use of any current or future AutoeCTD product will result in regulatory approval, accelerated agency review, or any specific agency action</li>
+            <li>Customers retain full and final responsibility for the accuracy, completeness, and submission of regulatory dossiers</li>
+            <li>Nothing on the Site should be construed as a substitute for qualified Regulatory Affairs judgment or other professional review</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-num">§ 07 — Indemnification</p>
+          <h2>You agree to indemnify us.</h2>
+          <p>You agree to indemnify, defend, and hold harmless AutoeCTD Inc. and its directors, officers, employees, and agents from and against any claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of or related to:</p>
+          <ul>
+            <li>Your use of the Site</li>
+            <li>Your violation of these Terms</li>
+            <li>Your violation of any applicable law or regulation</li>
+            <li>Your violation of the rights of any third party</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-num">§ 08 — Third-Party Links</p>
+          <h2>External sites are not under our control.</h2>
+          <p>The Site may contain links to external sites operated by third parties. We do not endorse, sponsor, or assume responsibility for the content, privacy practices, or accuracy of any third-party site. Your use of any third-party site is at your own risk and subject to that site's own terms and privacy policies.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 09 — Modifications</p>
+          <h2>These Terms may change.</h2>
+          <p>We may modify these Terms at any time by posting a revised version on the Site. The "Last updated" date at the top of this page will reflect the most recent revision. Your continued use of the Site after a revision constitutes acceptance of the modified Terms.</p>
+          <p>We may also modify, suspend, or discontinue any aspect of the Site at any time, with or without notice.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 10 — Termination</p>
+          <h2>Access may be suspended.</h2>
+          <p>We may suspend or terminate your access to the Site at any time, with or without notice, for any reason, including violation of these Terms. The provisions of these Terms relating to intellectual property, disclaimers, limitation of liability, indemnification, and governing law will survive any termination.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 11 — Governing Law and Jurisdiction</p>
+          <h2>These Terms are governed by Ontario law.</h2>
+          <p>These Terms are governed by and construed in accordance with the laws of the <strong>Province of Ontario</strong> and the federal laws of Canada applicable therein, without regard to conflict-of-law principles. You consent to the exclusive jurisdiction of the courts located in <strong>Toronto, Ontario, Canada</strong> for the resolution of any dispute arising from or related to these Terms or the Site.</p>
+          <p>The United Nations Convention on Contracts for the International Sale of Goods does not apply to these Terms.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 12 — General Provisions</p>
+          <h2>Severability, entire agreement, and assignment.</h2>
+          <p><strong>Severability.</strong> If any provision of these Terms is found to be unenforceable, that provision will be enforced to the maximum extent permissible, and the remaining provisions will remain in full force and effect.</p>
+          <p><strong>Entire Agreement.</strong> These Terms, together with the Privacy Policy, constitute the entire agreement between you and AutoeCTD with respect to the Site and supersede any prior agreements or understandings on the same subject matter.</p>
+          <p><strong>No Waiver.</strong> Our failure to enforce any provision of these Terms will not constitute a waiver of that provision or any other provision.</p>
+          <p><strong>Assignment.</strong> You may not assign or transfer these Terms or any rights under them without our prior written consent. We may assign these Terms freely.</p>
+        </section>
+
+        <section>
+          <p class="section-num">§ 13 — Contact</p>
+          <h2>How to reach us.</h2>
+          <p>Questions about these Terms should be directed to:</p>
+          <address>
+            AutoeCTD Inc.<br>
+            Greater Toronto Area, Ontario, Canada<br>
+            <a href="mailto:sales@autoectd.com">sales@autoectd.com</a>
+          </address>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-wordmark">Auto<span class="e">e</span>CTD<span class="tm">™</span></span>
+          </a>
+          <p>The AI-native regulatory submission platform. eCTD packaging, XML labeling, and deficiency response — engineered for the way Regulatory Affairs teams actually work.</p>
+        </div>
+        <div class="foot-col">
+          <h5>Suite</h5>
+          <ul>
+            <li><a href="index.html#suite">AutoeCTD</a></li>
+            <li><a href="index.html#suite">AutoeXML</a></li>
+            <li><a href="index.html#suite">AutoeDEF</a></li>
+            <li><a href="index.html#suite">AutoeDOC</a></li>
+            <li><a href="index.html#suite">AutoeLABEL</a></li>
+            <li><a href="index.html#suite">AutoeQA</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Platform</h5>
+          <ul>
+            <li><a href="index.html#engine">Classification engine</a></li>
+            <li><a href="index.html#process">Submission pipeline</a></li>
+            <li><a href="index.html#compliance">Compliance</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="index.html#company">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="mailto:sales@autoectd.com">Sales</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Use</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 AutoeCTD Inc. · All rights reserved.</span>
+        <span>Designed for 21 CFR Part 11 · Preparing for SOC 2</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
